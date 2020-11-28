@@ -18,6 +18,9 @@ type Config struct {
 	// When empty, the tranport stores the data inside a folder named exactly like the accessory
 	StoragePath string
 
+  // Optional alternative storage engine for transport data.
+  Storage util.Storage
+
 	// Port on which transport is reachable e.g. 12345
 	// When empty, the transport uses a random port
 	Port string
@@ -116,6 +119,10 @@ func (cfg *Config) merge(other Config) {
 	if dir := other.StoragePath; len(dir) > 0 {
 		cfg.StoragePath = dir
 	}
+
+  if s := other.Storage; s != nil {
+    cfg.Storage = s
+  }
 
 	if pin := other.Pin; len(pin) > 0 {
 		cfg.Pin = pin
